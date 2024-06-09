@@ -2,13 +2,21 @@
     <head>
         <title>Login</title>
         <style>
-
+            .success{
+                color:darkgreen;
+                background-color:greenyellow;
+                text-align: center;
+            }
+            .failure{
+                color:darkred;
+                background-color: tomato;
+                text-align: center;
+            }
         </style>
         <script type="text/javascript">
             function getCurrentURL (event) {
                 event.preventDefault();
                 
-                //url = window.location.search;
                 var user = document.getElementById("user").value;
                 var pwd = document.getElementById("pwd").value;
                 var request = "http://localhost:8000/login?userid="+user+"&password="+pwd;
@@ -23,12 +31,12 @@
                     }
                 }).then(response => response.json())
                   .then(json => {
-                    let finaldisplay = `<br><h1>STATUS: </h1><br><br>`;
+                    let finaldisplay = `<br><br>`;
                     
                     if (json.status == "SUCCESS"){
-                        finaldisplay += `<h1>LOGIN SUCCESSFUL</h1>`;
+                        finaldisplay += `<h1 class="success">LOGIN SUCCESSFUL</h1>`;
                     } else{
-                        finaldisplay += `<h1>LOGIN FAILED</h1>`;
+                        finaldisplay += `<h1 class="failure">LOGIN FAILED</h1>`;
                     }
                     
                     document.getElementById("result").innerHTML = finaldisplay;
@@ -41,13 +49,14 @@
         </script>
     </head>
     <body>
-        <h1>LOGIN</h1>
+        <h1 style="text-align: center;">LOGIN</h1>
         <div>
-            <form>
+            <form style="text-align: center;">
                 <h4>User: </h4>
                 <input type="text" id="user" name="user">
                 <h4>Password: </h4>
-                <input type="text" id="pwd" name="pwd">
+                <input type="text" id="pwd" name="pwd"> 
+                <br><br>
                 <button onclick="getCurrentURL(event)">submit</button>
             </form>
             <div id="result"></div>
