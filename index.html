@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>Login</title>
+        <style>
+
+        </style>
+        <script type="text/javascript">
+            function getCurrentURL (event) {
+                event.preventDefault();
+                
+                //url = window.location.search;
+                var user = document.getElementById("user").value;
+                var pwd = document.getElementById("pwd").value;
+                var request = "http://localhost:8000/login?userid="+user+"&password="+pwd;
+
+                
+                fetch(request,{
+                    mode: 'cors',
+                    credentials: "include",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin':'*'
+                    }
+                }).then(response => response.json())
+                  .then(json => {
+                    let finaldisplay = `<br><h1>STATUS: </h1><br><br>`;
+                    
+                    if (json.status == "SUCCESS"){
+                        finaldisplay += `<h1>LOGIN SUCCESSFUL</h1>`;
+                    } else{
+                        finaldisplay += `<h1>LOGIN FAILED</h1>`;
+                    }
+                    
+                    document.getElementById("result").innerHTML = finaldisplay;
+                })
+
+                
+                
+            }
+
+        </script>
+    </head>
+    <body>
+        <h1>LOGIN</h1>
+        <div>
+            <form>
+                <h4>User: </h4>
+                <input type="text" id="user" name="user">
+                <h4>Password: </h4>
+                <input type="text" id="pwd" name="pwd">
+                <button onclick="getCurrentURL(event)">submit</button>
+            </form>
+            <div id="result"></div>
+        </div>
+    </body>
+</html>
